@@ -1,4 +1,4 @@
-require "fire_share/version"
+require 'fire_share/version'
 
 module FireShare
   # Your code goes here...
