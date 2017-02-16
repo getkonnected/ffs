@@ -54,57 +54,51 @@ module FFS
     end
 
     def build_android_json(json, opts)
-      json.merge(
-        androidInfo: {
-          androidPackageName: FFS.configuration.android_package_name,
-          androidFallbackLink: FFS.configuration.android_fallback_link,
-          androidMinPackageVersionCode: FFS.configuration.android_min_version
-        }
-      )
+      json[:androidInfo] = {
+        androidPackageName: FFS.configuration.android_package_name,
+        androidFallbackLink: FFS.configuration.android_fallback_link,
+        androidMinPackageVersionCode: FFS.configuration.android_min_version
+      }
 
-      json.delete(:androidFallbackLink) unless opts[:fallback]
-      json.delete(:androidMinPackageVersionCode) unless opts[:min_package]
+      json[:androidInfo].delete(:androidFallbackLink) unless opts[:fallback]
+      json[:androidInfo].delete(:androidMinPackageVersionCode) unless opts[:min_package]
       json
     end
 
     def build_ios_json(json, opts)
-      json.merge(
-        iosInfo: {
-          iosBundleId: FFS.configuration.ios_bundle_id,
-          iosFallbackLink: FFS.configuration.ios_fallback_link,
-          iosCustomScheme: FFS.configuration.custom_scheme,
-          iosIpadFallbackLink: FFS.configuration.ipad_fallback_link,
-          iosIpadBundleId: FFS.configuration.ipad_bundle_id,
-          iosAppStoreId: FFS.configuration.ios_app_store_id
-        }
-      )
+      json[:iosInfo] = {
+        iosBundleId: FFS.configuration.ios_bundle_id,
+        iosFallbackLink: FFS.configuration.ios_fallback_link,
+        iosCustomScheme: FFS.configuration.custom_scheme,
+        iosIpadFallbackLink: FFS.configuration.ipad_fallback_link,
+        iosIpadBundleId: FFS.configuration.ipad_bundle_id,
+        iosAppStoreId: FFS.configuration.ios_app_store_id
+      }
 
-      json.delete(:iosFallbackLink) unless opts[:fallback]
-      json.delete(:iosCustomScheme) unless opts[:custom_scheme]
-      json.delete(:iosIpadFallbackLink) unless opts[:ipad] && opts[:fallback]
-      json.delete(:iosIpadBundleId) unless opts[:ipad]
+      json[:iosInfo].delete(:iosFallbackLink) unless opts[:fallback]
+      json[:iosInfo].delete(:iosCustomScheme) unless opts[:custom_scheme]
+      json[:iosInfo].delete(:iosIpadFallbackLink) unless opts[:ipad] && opts[:fallback]
+      json[:iosInfo].delete(:iosIpadBundleId) unless opts[:ipad]
       json
     end
 
     def build_analytics_json(json, opts)
-      json.merge(
-        analyticsInfo: {
-          googlePlayAnalytics: {
-            utmSource: FFS.configuration.utm_source,
-            utmMedium: FFS.configuration.utm_medium,
-            utmCampaign: FFS.configuration.utm_campaign,
-            utmTerm: FFS.configuration.utm_term,
-            utmContent: FFS.configuration.utm_content,
-            gclid: FFS.configuration.gclid
-          },
-          itunesConnectAnalytics: {
-            at: FFS.configuration.at,
-            ct: FFS.configuration.ct,
-            mt: FFS.configuration.mt,
-            pt: FFS.configuration.pt
-          }
+      json[:analyticsInfo] = {
+        googlePlayAnalytics: {
+          utmSource: FFS.configuration.utm_source,
+          utmMedium: FFS.configuration.utm_medium,
+          utmCampaign: FFS.configuration.utm_campaign,
+          utmTerm: FFS.configuration.utm_term,
+          utmContent: FFS.configuration.utm_content,
+          gclid: FFS.configuration.gclid
+        },
+        itunesConnectAnalytics: {
+          at: FFS.configuration.at,
+          ct: FFS.configuration.ct,
+          mt: FFS.configuration.mt,
+          pt: FFS.configuration.pt
         }
-      )
+      }
 
       json[:analyticsInfo].delete(:googlePlayAnalytics) unless opts[:android]
       json[:analyticsInfo].delete(:itunesConnectAnalytics) unless opts[:ios]
