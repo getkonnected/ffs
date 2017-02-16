@@ -1,4 +1,5 @@
 require 'fire_share/share'
+require 'fire_share/configuration'
 require 'fire_share/version'
 
 module FireShare
