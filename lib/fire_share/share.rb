@@ -69,10 +69,10 @@ module FireShare
       json.merge(
         iosInfo: {
           iosBundleId: FireShare.configuration.ios_bundle_id,
-          iosFallbackLink: 'string',
-          iosCustomScheme: 'string',
-          iosIpadFallbackLink: 'string',
-          iosIpadBundleId: 'string',
+          iosFallbackLink: FireShare.configuration.ios_fallback_link,
+          iosCustomScheme: FireShare.configuration.custom_scheme,
+          iosIpadFallbackLink: FireShare.configuration.ipad_fallback_link,
+          iosIpadBundleId: FireShare.configuration.ipad_bundle_id,
           iosAppStoreId: FireShare.configuration.ios_app_store_id
         }
       )
@@ -82,18 +82,18 @@ module FireShare
       json.merge(
         analyticsInfo: {
           googlePlayAnalytics: {
-            utmSource: string,
-            utmMedium: string,
-            utmCampaign: string,
-            utmTerm: string,
-            utmContent: string,
-            gclid: string
+            utmSource: FireShare.configuration.utm_source,
+            utmMedium: FireShare.configuration.utm_medium,
+            utmCampaign: FireShare.configuration.utm_campaign,
+            utmTerm: FireShare.configuration.utm_term,
+            utmContent: FireShare.configuration.utm_content,
+            gclid: FireShare.configuration.gclid
           },
           itunesConnectAnalytics: {
-            at: string,
-            ct: string,
-            mt: string,
-            pt: string
+            at: FireShare.configuration.at,
+            ct: FireShare.configuration.ct,
+            mt: FireShare.configuration.mt,
+            pt: FireShare.configuration.pt
           }
         }
       )
