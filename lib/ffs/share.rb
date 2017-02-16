@@ -27,63 +27,49 @@ module FFS
     private
 
     def build_json_body(opts)
-      body = base_json
-      body = build_android_info(body, opts) if opts[:android]
-      body = build_ios_info(body, opts) if opts[:ios]
-      body = build_analytics_info(body, opts) if opts[:analytics]
+      body = { dynamicLinkInfo: {} }
+      body[:dynamicLinkInfo][:androidInfo] = build_android_info(opts) if opts[:android]
+      body[:dynamicLinkInfo][:iosInfo] = build_ios_info(opts) if opts[:ios]
+      body[:dynamicLinkInfo][:analyticsInfo] = build_analytics_info(opts) if opts[:analytics]
       body.to_json
     end
 
-    def base_json
-      {
-        dynamicLinkInfo: {
-          dynamicLinkDomain: FFS.configuration.dynamic_link_domain,
-          link: 'http://www.diviup.org',
-          socialMetaTagInfo: {
-            socialTitle: 'title',
-            socialDescription: 'description',
-            socialImageLink: 'link'
-          }
-        },
-        suffix: {
-          option: FFS.configuration.suffix
-        }
+    def build_android_info(opts)
+      android_info = {
+        androidPackageName: FFS.configuration.android_package_name
       }
+
+      android_info[:androidFallbackLink] = FFS.configuration.android_fallback_link if opts[:fallback]
+      android_info[:androidMinPackageVersionCode] = FFS.configuration.android_min_version if opts[:min_package]
+      android_info
     end
 
-    def build_android_info(body, opts)
-      body[:dynamicLinkInfo][:androidInfo][:androidPackageName] = FFS.configuration.android_package_name
-
-      body[:dynamicLinkInfo][:androidInfo][:androidFallbackLink] = FFS.configuration.android_fallback_link if opts[:fallback]
-      body[:dynamicLinkInfo][:androidInfo][:androidMinPackageVersionCode] = FFS.configuration.android_min_version if opts[:min_package]
-      body
-    end
-
-    def build_ios_info(body, opts)
-      body[:dynamicLinkInfo][:iosInfo] = {
+    def build_ios_info(opts)
+      ios_info = {
         iosBundleId: FFS.configuration.ios_bundle_id,
         iosAppStoreId: FFS.configuration.ios_app_store_id
       }
 
-      body[:dynamicLinkInfo][:iosInfo][:iosFallbackLink] = FFS.configuration.ios_fallback_link if opts[:fallback]
-      body[:dynamicLinkInfo][:iosInfo][:iosCustomScheme] = FFS.configuration.custom_scheme if opts[:custom_scheme]
-      build_ipad_info(body, opts) if opts[:ipad]
-      body
+      ios_info[:iosFallbackLink] = FFS.configuration.ios_fallback_link if opts[:fallback]
+      ios_info[:iosCustomScheme] = FFS.configuration.custom_scheme if opts[:custom_scheme]
+      build_ipad_info(ios_info, opts) if opts[:ipad]
+      ios_info
     end
 
-    def build_ipad_info(body, opts)
-      body[:dynamicLinkInfo][:iosInfo][:iosIpadBundleId] = FFS.configuration.ipad_bundle_id
-      body[:dynamicLinkInfo][:iosInfo][:iosIpadFallbackLink] = FFS.configuration.ipad_fallback_link if opts[:fallback]
+    def build_ipad_info(ios_info, opts)
+      ios_info[:iosIpadBundleId] = FFS.configuration.ipad_bundle_id
+      ios_info[:iosIpadFallbackLink] = FFS.configuration.ipad_fallback_link if opts[:fallback]
     end
 
-    def build_analytics_info(body, opts)
-      build_google_play_analytics(body) if opts[:android]
-      build_itunes_connect_analytics(body) if opts[:ios]
-      body
+    def build_analytics_info(opts)
+      analytics = {}
+      analytics[:googlePlayAnalytics] = build_google_play_analytics(body) if opts[:android]
+      analytics[:itunesConnectAnalytics] = build_itunes_connect_analytics(body) if opts[:ios]
+      analytics
     end
 
-    def build_google_play_analytics(body)
-      body[:dynamicLinkInfo][:analyticsInfo][:googlePlayAnalytics] = {
+    def build_google_play_analytics
+      {
         utmSource: FFS.configuration.utm_source,
         utmMedium: FFS.configuration.utm_medium,
         utmCampaign: FFS.configuration.utm_campaign,
@@ -93,8 +79,8 @@ module FFS
       }
     end
 
-    def build_itunes_connect_analytics(body)
-      body[:dynamicLinkInfo][:analyticsInfo][:itunesConnectAnalytics] = {
+    def build_itunes_connect_analytics
+      {
         at: FFS.configuration.at,
         ct: FFS.configuration.ct,
         mt: FFS.configuration.mt,
