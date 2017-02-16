@@ -56,7 +56,7 @@ module FireShare
         androidInfo: {
           androidPackageName: FireShare.configuration.android_package_name,
           androidFallbackLink: FireShare.configuration.android_fallback_link,
-          androidMinPackageVersionCode: FireShare.configuration.android_min_package_version_code,
+          androidMinPackageVersionCode: FireShare.configuration.android_min_version,
         }
       )
 
