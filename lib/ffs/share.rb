@@ -13,7 +13,7 @@ module FFS
       analytics: false
     }.freeze
 
-    def generate_link(**options)
+    def generate_short_link(**options)
       opts = DEFAULT.merge(options)
       uri = URI.parse("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=#{FFS.configuration.api_key}")
       http = Net::HTTP.new(uri.host, uri.port)
