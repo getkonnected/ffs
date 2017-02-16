@@ -52,9 +52,7 @@ module FFS
     end
 
     def build_android_info(body, opts)
-      body[:dynamicLinkInfo][:androidInfo] = {
-        androidPackageName: FFS.configuration.android_package_name
-      }
+      body[:dynamicLinkInfo][:androidInfo][:androidPackageName] = FFS.configuration.android_package_name
 
       body[:dynamicLinkInfo][:androidInfo][:androidFallbackLink] = FFS.configuration.android_fallback_link if opts[:fallback]
       body[:dynamicLinkInfo][:androidInfo][:androidMinPackageVersionCode] = FFS.configuration.android_min_version if opts[:min_package]
