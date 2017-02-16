@@ -30,26 +30,28 @@ module FireShare
     private
 
     def build_json_body(opts)
-      json =
-        {
-          dynamicLinkInfo: {
-            dynamicLinkDomain: FireShare.configuration.dynamic_link_domain,
-            link: 'http://www.diviup.org',
-            socialMetaTagInfo: {
-              socialTitle: 'title',
-              socialDescription: 'description',
-              socialImageLink: 'link'
-            }
-          },
-          suffix: {
-            option: FireShare.configuration.suffix
-          }
-        }
-
+      json = base_json
       json = build_android_json(json, opts) if opts[:android]
       json = build_ios_json(json, opts) if opts[:ios]
       json = build_analytics_json(json, opts) if opts[:analytics]
       json.to_json
+    end
+
+    def base_json
+      {
+        dynamicLinkInfo: {
+          dynamicLinkDomain: FireShare.configuration.dynamic_link_domain,
+          link: 'http://www.diviup.org',
+          socialMetaTagInfo: {
+            socialTitle: 'title',
+            socialDescription: 'description',
+            socialImageLink: 'link'
+          }
+        },
+        suffix: {
+          option: FireShare.configuration.suffix
+        }
+      }
     end
 
     def build_android_json(json, opts)
@@ -77,6 +79,12 @@ module FireShare
           iosAppStoreId: FireShare.configuration.ios_app_store_id
         }
       )
+
+      json.delete(:iosFallbackLink) unless opts[:fallback]
+      json.delete(:iosCustomScheme) unless opts[:custom_scheme]
+      json.delete(:iosIpadFallbackLink) unless opts[:ipad]
+      json.delete(:iosIpadBundleId) unless opts[:ipad]
+      json
     end
 
     def build_analytics_json(json, opts)
@@ -98,6 +106,10 @@ module FireShare
           }
         }
       )
+
+      json[:analyticsInfo].delete(:googlePlayAnalytics) unless opts[:android]
+      json[:analyticsInfo].delete(:itunesConnectAnalytics) unless opts[:ios]
+      json
     end
   end
 end
