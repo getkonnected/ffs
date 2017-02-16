@@ -33,11 +33,11 @@ module FireShare
         {
           dynamicLinkInfo: {
             dynamicLinkDomain: FireShare.configuration.dynamic_link_domain,
-            link: "http://www.diviup.org/#{obj.class.name.downcase.pluralize}/#{obj.id}",
+            link: 'http://www.diviup.org',
             socialMetaTagInfo: {
-              socialTitle: obj.name,
-              socialDescription: obj.description,
-              socialImageLink: obj.logo.thumbnail.url
+              socialTitle: 'title',
+              socialDescription: 'description',
+              socialImageLink: 'link'
             }
           },
           suffix: {
