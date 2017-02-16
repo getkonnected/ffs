@@ -56,8 +56,8 @@ module FFS
         androidPackageName: FFS.configuration.android_package_name
       }
 
-      body[:androidInfo][:androidFallbackLink] = FFS.configuration.android_fallback_link if opts[:fallback]
-      body[:androidInfo][:androidMinPackageVersionCode] = FFS.configuration.android_min_version if opts[:min_package]
+      body[:dynamicLinkInfo][:androidInfo][:androidFallbackLink] = FFS.configuration.android_fallback_link if opts[:fallback]
+      body[:dynamicLinkInfo][:androidInfo][:androidMinPackageVersionCode] = FFS.configuration.android_min_version if opts[:min_package]
       body
     end
 
