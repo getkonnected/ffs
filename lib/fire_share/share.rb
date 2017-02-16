@@ -48,7 +48,7 @@ module FireShare
       json = build_android_json(json, opts) if opts[:android]
       json = build_ios_json(json, opts)
       json = build_analytics_json(json, opts)
-      json
+      json.to_json
     end
 
     def build_android_json(json, opts)
