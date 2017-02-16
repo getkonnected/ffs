@@ -13,7 +13,7 @@ module FFS
       analytics: false
     }.freeze
 
-    def generate_short_link(**options)
+    def generate_firebase_short_link(**options)
       opts = DEFAULT.merge(options)
       uri = URI.parse("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=#{FFS.configuration.api_key}")
       http = Net::HTTP.new(uri.host, uri.port)
@@ -62,20 +62,20 @@ module FFS
     end
 
     def build_ios_info(body, opts)
-      body[:iosInfo] = {
+      body[:dynamicLinkInfo][:iosInfo] = {
         iosBundleId: FFS.configuration.ios_bundle_id,
         iosAppStoreId: FFS.configuration.ios_app_store_id
       }
 
-      body[:iosInfo][:iosFallbackLink] = FFS.configuration.ios_fallback_link if opts[:fallback]
-      body[:iosInfo][:iosCustomScheme] = FFS.configuration.custom_scheme if opts[:custom_scheme]
+      body[:dynamicLinkInfo][:iosInfo][:iosFallbackLink] = FFS.configuration.ios_fallback_link if opts[:fallback]
+      body[:dynamicLinkInfo][:iosInfo][:iosCustomScheme] = FFS.configuration.custom_scheme if opts[:custom_scheme]
       build_ipad_info(body, opts) if opts[:ipad]
       body
     end
 
     def build_ipad_info(body, opts)
-      body[:iosInfo][:iosIpadBundleId] = FFS.configuration.ipad_bundle_id
-      body[:iosInfo][:iosIpadFallbackLink] = FFS.configuration.ipad_fallback_link if opts[:fallback]
+      body[:dynamicLinkInfo][:iosInfo][:iosIpadBundleId] = FFS.configuration.ipad_bundle_id
+      body[:dynamicLinkInfo][:iosInfo][:iosIpadFallbackLink] = FFS.configuration.ipad_fallback_link if opts[:fallback]
     end
 
     def build_analytics_info(body, opts)
@@ -85,7 +85,7 @@ module FFS
     end
 
     def build_google_play_analytics(body)
-      body[:analyticsInfo][:googlePlayAnalytics] = {
+      body[:dynamicLinkInfo][:analyticsInfo][:googlePlayAnalytics] = {
         utmSource: FFS.configuration.utm_source,
         utmMedium: FFS.configuration.utm_medium,
         utmCampaign: FFS.configuration.utm_campaign,
@@ -96,7 +96,7 @@ module FFS
     end
 
     def build_itunes_connect_analytics(body)
-      body[:analyticsInfo][:itunesConnectAnalytics] = {
+      body[:dynamicLinkInfo][:analyticsInfo][:itunesConnectAnalytics] = {
         at: FFS.configuration.at,
         ct: FFS.configuration.ct,
         mt: FFS.configuration.mt,
