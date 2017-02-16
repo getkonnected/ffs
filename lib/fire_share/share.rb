@@ -15,9 +15,8 @@ module FireShare
       analytics: false
     }.freeze
 
-    def generate_link(link_opts = {})
-      opts = DEFAULT.merge(link_opts)
-
+    def generate_link(**options)
+      opts = DEFAULT.merge(options)
       uri = URI.parse("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=#{FireShare.configuration.api_key}")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -59,7 +58,7 @@ module FireShare
         androidInfo: {
           androidPackageName: FireShare.configuration.android_package_name,
           androidFallbackLink: FireShare.configuration.android_fallback_link,
-          androidMinPackageVersionCode: FireShare.configuration.android_min_version,
+          androidMinPackageVersionCode: FireShare.configuration.android_min_version
         }
       )
 
@@ -82,7 +81,7 @@ module FireShare
 
       json.delete(:iosFallbackLink) unless opts[:fallback]
       json.delete(:iosCustomScheme) unless opts[:custom_scheme]
-      json.delete(:iosIpadFallbackLink) unless opts[:ipad]
+      json.delete(:iosIpadFallbackLink) unless opts[:ipad] && opts[:fallback]
       json.delete(:iosIpadBundleId) unless opts[:ipad]
       json
     end
