@@ -20,6 +20,7 @@ module FireShare
 
       uri = URI.parse("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=#{FireShare.configuration.api_key}")
       http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
       headers = { 'Content-Type' => 'application/json' }
       body = build_json_body(opts)
 
