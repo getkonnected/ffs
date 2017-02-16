@@ -52,7 +52,7 @@ module FFS
     end
 
     def build_android_info(body, opts)
-      body[:androidInfo] = {
+      body[:dynamicLinkInfo][:androidInfo] = {
         androidPackageName: FFS.configuration.android_package_name
       }
 
