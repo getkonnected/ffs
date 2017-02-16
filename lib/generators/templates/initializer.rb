@@ -1,4 +1,4 @@
-FireShare.configure do |config|
+FFS.configure do |config|
   config.api_key = 'api_key'
   config.dynamic_link_domain = 'dynamic_link_domain'
   config.suffix = 'SHORT'

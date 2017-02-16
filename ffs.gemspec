@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'fire_share/version'
+require 'ffs/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'fire_share'
-  spec.version       = FireShare::VERSION
+  spec.name          = 'ffs'
+  spec.version       = FFS::VERSION
   spec.authors       = ['Hunter Braun']
   spec.email         = ['hunter.braun@gmail.com']
 
-  spec.summary       = 'Firebase dynamic link generation for Ruby.'
-  spec.description   = 'Firebase dynamic link generation for Ruby.'
-  spec.homepage      = 'https://github.com/goronfreeman/fire_share'
+  spec.summary       = 'Fast Firebase sharing for Ruby.'
+  spec.description   = 'Easily generate Firebase dynamic links for your Ruby application.'
+  spec.homepage      = 'https://github.com/goronfreeman/ffs'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.

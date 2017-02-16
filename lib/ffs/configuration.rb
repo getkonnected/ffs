@@ -1,4 +1,4 @@
-module FireShare
+module FFS
   class Configuration
     attr_accessor :api_key, :dynamic_link_domain, :suffix,
                   :android_package_name, :android_fallback_link, :android_min_version,

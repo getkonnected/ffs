@@ -1,8 +1,8 @@
-require 'fire_share/share'
-require 'fire_share/configuration'
-require 'fire_share/version'
+require 'ffs/share'
+require 'ffs/configuration'
+require 'ffs/version'
 
-module FireShare
+module FFS
   class << self
     attr_accessor :configuration
   end
