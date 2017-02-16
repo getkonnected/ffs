@@ -27,11 +27,22 @@ module FFS
     private
 
     def build_json_body(opts)
-      body = { dynamicLinkInfo: {} }
+      body = base_info
       body[:dynamicLinkInfo][:androidInfo] = build_android_info(opts) if opts[:android]
       body[:dynamicLinkInfo][:iosInfo] = build_ios_info(opts) if opts[:ios]
       body[:dynamicLinkInfo][:analyticsInfo] = build_analytics_info(opts) if opts[:analytics]
       body.to_json
+    end
+
+    def base_info
+      {
+        dynamicLinkInfo: {
+          dynamicLinkDomain: FFS.configuration.dynamic_link_domain
+        },
+        suffix: {
+          option: FFS.configuration.suffix
+        }
+      }
     end
 
     def build_android_info(opts)
