@@ -1,5 +1,3 @@
-# https://firebase.google.com/docs/reference/dynamic-links/link-shortener
-
 require 'net/http'
 require 'uri'
 
@@ -71,9 +69,13 @@ module FFS
 
       json[:iosInfo][:iosFallbackLink] = FFS.configuration.ios_fallback_link if opts[:fallback]
       json[:iosInfo][:iosCustomScheme] = FFS.configuration.custom_scheme if opts[:custom_scheme]
-      json[:iosInfo][:iosIpadBundleId] = FFS.configuration.ipad_bundle_id if opts[:ipad]
-      json[:iosInfo][:iosIpadFallbackLink] = FFS.configuration.ipad_fallback_link if opts[:ipad] && opts[:fallback]
+      build_ipad_json(json, opts) if opts[:ipad]
       json
+    end
+
+    def build_ipad_json(json, opts)
+      json[:iosInfo][:iosIpadBundleId] = FFS.configuration.ipad_bundle_id
+      json[:iosInfo][:iosIpadFallbackLink] = FFS.configuration.ipad_fallback_link if opts[:fallback]
     end
 
     def build_analytics_json(json, opts)
