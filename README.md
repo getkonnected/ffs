@@ -22,7 +22,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+h1 = {
+  link: 'string',
+  socialMetaTagInfo: {
+    socialTitle: 'string',
+    socialDescription: 'string',
+    socialImageLink: 'string'
+  }
+}
+```
 
 ## Development
 

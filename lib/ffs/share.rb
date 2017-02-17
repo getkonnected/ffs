@@ -1,6 +1,6 @@
+require 'addressable/uri'
 require 'json'
 require 'net/http'
-require 'uri'
 
 module FFS
   class Share
@@ -11,18 +11,21 @@ module FFS
       ipad: false,
       custom_scheme: false,
       fallback: false,
-      analytics: false
+      analytics: false,
+      bitly: false
     }.freeze
 
-    def generate_firebase_short_link(hash, **options)
+    def generate_dynamic_link(hash, **options)
       opts = DEFAULT.merge(options)
-      uri = URI.parse("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=#{FFS.configuration.api_key}")
+      uri = Addressable::URI.parse("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=#{FFS.configuration.api_key}")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       headers = { 'Content-Type' => 'application/json' }
       body = build_json_body(hash, opts)
+      res = http.post(uri, body, headers).body
 
-      http.post(uri, body, headers).body
+      return res unless opts[:bitly]
+      shorten_with_bitly(res)
     end
 
     private
@@ -99,6 +102,14 @@ module FFS
         mt: FFS.configuration.mt,
         pt: FFS.configuration.pt
       }
+    end
+
+    def shorten_with_bitly(res)
+      long_link = JSON.parse(res)['previewLink'].gsub(/&d=1/, '')
+      uri = Adressable::URI.parse("https://api-ssl.bitly.com/v3/shorten?access_token=#{FFS.configuration.bitly_api_key}&longUrl=#{long_link}")
+      res = JSON.parse(Net::HTTP.get(uri))
+
+      res['data']['url']
     end
   end
 end

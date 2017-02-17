@@ -1,5 +1,6 @@
 FFS.configure do |config|
-  config.api_key = 'api_key'
+  config.firebase_api_key = 'api_key'
+  config.bitly_api_key = 'api_key'
   config.dynamic_link_domain = 'dynamic_link_domain'
   config.suffix = 'SHORT'
 
