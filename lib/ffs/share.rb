@@ -17,7 +17,7 @@ module FFS
 
     def generate_dynamic_link(hash, **options)
       opts = DEFAULT.merge(options)
-      uri = Addressable::URI.parse("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=#{FFS.configuration.api_key}")
+      uri = Addressable::URI.parse("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=#{FFS.configuration.firebase_api_key}")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       headers = { 'Content-Type' => 'application/json' }
