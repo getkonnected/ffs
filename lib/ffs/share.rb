@@ -1,3 +1,4 @@
+require 'json'
 require 'net/http'
 require 'uri'
 
@@ -13,21 +14,22 @@ module FFS
       analytics: false
     }.freeze
 
-    def generate_firebase_short_link(**options)
+    def generate_firebase_short_link(hash, **options)
       opts = DEFAULT.merge(options)
       uri = URI.parse("https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=#{FFS.configuration.api_key}")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       headers = { 'Content-Type' => 'application/json' }
-      body = build_json_body(opts)
+      body = build_json_body(hash, opts)
 
       http.post(uri, body, headers).body
     end
 
     private
 
-    def build_json_body(opts)
-      body = base_info
+    def build_json_body(hash, opts)
+      body = base_info(hash)
+      body[:dynamicLinkInfo].merge!(hash)
       body[:dynamicLinkInfo][:androidInfo] = build_android_info(opts) if opts[:android]
       body[:dynamicLinkInfo][:iosInfo] = build_ios_info(opts) if opts[:ios]
       body[:dynamicLinkInfo][:analyticsInfo] = build_analytics_info(opts) if opts[:analytics]
