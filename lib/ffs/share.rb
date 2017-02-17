@@ -28,7 +28,7 @@ module FFS
     private
 
     def build_json_body(hash, opts)
-      body = base_info(hash)
+      body = base_info
       body[:dynamicLinkInfo].merge!(hash)
       body[:dynamicLinkInfo][:androidInfo] = build_android_info(opts) if opts[:android]
       body[:dynamicLinkInfo][:iosInfo] = build_ios_info(opts) if opts[:ios]
