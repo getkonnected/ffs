@@ -109,7 +109,7 @@ module FFS
       uri = URI.parse("https://api-ssl.bitly.com/v3/shorten?access_token=#{FFS.configuration.bitly_api_key}&longUrl=#{long_link}")
       res = JSON.parse(Net::HTTP.get(uri))
 
-      res['data']
+      res['data']['url']
     end
   end
 end
