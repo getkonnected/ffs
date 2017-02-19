@@ -106,7 +106,7 @@ module FFS
     end
 
     def shorten_with_bitly(res)
-      long_link = JSON.parse(res)['previewLink'].gsub(/&d=1/, '')
+      long_link = JSON.parse(res)['previewLink'].gsub(/&d=1/, '').gsub(/&/, '%26')
       uri = Addressable::URI.parse("https://api-ssl.bitly.com/v3/shorten?access_token=#{FFS.configuration.bitly_api_key}&longUrl=#{long_link}")
       res = JSON.parse(Net::HTTP.get(uri))
 
