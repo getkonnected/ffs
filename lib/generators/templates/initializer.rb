@@ -23,7 +23,6 @@ FFS.configure do |config|
   config.suffix = 'SHORT'
 
   # ==> Android configuration
-
   # Configure the package name of the Android app to use to open the link.
   config.android_package_name = 'android_package_name'
 
