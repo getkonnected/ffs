@@ -1,6 +1,7 @@
-require 'ffs/share'
 require 'ffs/configuration'
 require 'ffs/version'
+require 'ffs/share'
+require 'generators/ffs/install_generator'
 
 module FFS
   class << self
