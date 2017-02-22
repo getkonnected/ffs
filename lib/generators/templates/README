@@ -1,0 +1,16 @@
+===============================================================================
+
+Some setup you must do manually if you haven't yet:
+
+  Modify config/initializers/ffs.rb to suit your application's needs.
+  Full documentation for each configuration option can be found here:
+  https://firebase.google.com/docs/reference/dynamic-links/link-shortener
+
+  You should store any sensitive information in environment variables that you
+  do not check into version control:
+
+    FFS.configure do |config|
+      config.firebase_api_key = Rails.application.secrets.firebase[:api_key]
+    end
+
+===============================================================================
