@@ -134,7 +134,16 @@ Below is a table of options you can pass to `#generate_dynamic_link`, along with
 | analytics | false | Collect analytics using Google Play and/or iTunes. |
 | bitly | false | Use Bitly for link shortening instead of Firebase. |
 
-Full explanation can be found in the
+Utilize options like this:
+
+```ruby
+ffs = FFS::Share.new
+
+# We don't need metadata for iOS, want Google Play analytics, and want to use Bitly.
+ffs.generate_dynamic_link(link_info, ios: false, analytics: true, bitly: true)
+```
+
+Detailed explanations can be found in the
 [Firebase documentation](https://firebase.google.com/docs/reference/dynamic-links/link-shortener#parameters)
 
 ## Development
