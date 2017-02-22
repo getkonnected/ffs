@@ -12,7 +12,7 @@ FFS works with Rails 4.1 onwards. Add it to your Gemfile with:
 gem 'ffs'
 ```
 
-Then run `bundle install`
+Then run `bundle install`.
 
 Next, run the generator to create the initializer:
 
@@ -41,7 +41,9 @@ FFS.configure do |config|
 end
 ```
 
-For full explanation of each configuration option, check the
+You should utilize environment variables for any API keys and other sensitive
+information you don't want made public.
+For a full explanation of each configuration option, check the
 [Firebase dynamic links documentation](https://firebase.google.com/docs/reference/dynamic-links/link-shortener).
 
 ## Usage
@@ -89,12 +91,16 @@ class Author < ApplicationRecord
 end
 ```
 
-We want to pass this object to FFS to create a shareable link to Twitter.
+We want to pass this object to FFS to create a shareable link to post to Twitter.
 Since `#generate_dynamic_link` takes a hash as its first argument, it allows
 us to do this:
 
 ```ruby
-walt = Author.new(name: 'Walt Whitman', bio: 'American poet, essayist, and journalist.', picture: 'walt.jpg')
+walt = Author.new(
+  name: 'Walt Whitman',
+  bio: 'American poet, essayist, and journalist.',
+  picture: 'walt.jpg'
+)
 ffs = FFS::Share.new
 
 def author_info(author)
@@ -118,7 +124,7 @@ ffs.generate_dynamic_link(link_info)
 Below is a table of options you can pass to `#generate_dynamic_link`, along with their default value:
 
 | Option  | Default Value | Description |
-| ------------- | ------------- |
+| ------------- | ------------- | ------------- |
 | android  | true | Include metadata for Android. |
 | ios | true | Include metadata for iOS. |
 | min_package | false | Restrict the dynamic link to certain app versions. (Android) |
